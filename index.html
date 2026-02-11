@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eigo Only! - 英語クイズゲーム</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Start Screen -->
+    <div id="screen-start" class="screen active">
+      <h1 class="title">Eigo Only!</h1>
+      <p class="subtitle">英語のヒントから答えを当てよう</p>
+      <div class="rules">
+        <p>ルール</p>
+        <ul>
+          <li>英語の説明文を読んで、それが何かを当てます</li>
+          <li>ヒントは3段階。だんだん簡単になります</li>
+          <li>早く答えるほど高得点！</li>
+        </ul>
+      </div>
+      <button id="btn-start" class="btn btn-primary">スタート</button>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="screen-quiz" class="screen">
+      <div class="quiz-header">
+        <span id="quiz-progress">Q1 / 10</span>
+        <span id="quiz-score">Score: 0</span>
+      </div>
+      <div id="hint-level" class="hint-level">Hint Level 1 / 3</div>
+      <div id="hint-box" class="hint-box">
+        <p id="hint-text"></p>
+      </div>
+      <button id="btn-next-hint" class="btn btn-hint">もっとヒントを見る</button>
+      <div id="choices" class="choices"></div>
+    </div>
+
+    <!-- Result per question -->
+    <div id="screen-answer" class="screen">
+      <div id="answer-result" class="answer-result"></div>
+      <div id="answer-detail" class="answer-detail"></div>
+      <button id="btn-next" class="btn btn-primary">次の問題へ</button>
+    </div>
+
+    <!-- Final Score Screen -->
+    <div id="screen-final" class="screen">
+      <h2 class="final-title">結果発表</h2>
+      <div id="final-score" class="final-score"></div>
+      <div id="final-breakdown" class="final-breakdown"></div>
+      <button id="btn-retry" class="btn btn-primary">もう一度遊ぶ</button>
+    </div>
+  </div>
+
+  <script src="js/questionMaster.js"></script>
+  <script src="js/gameMaster.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
