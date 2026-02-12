@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eigo Only! - 英語クイズゲーム</title>
+  <title>Eigo Only! - 英語なぞときクイズ</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,12 +11,12 @@
     <!-- Start Screen -->
     <div id="screen-start" class="screen active">
       <h1 class="title">Eigo Only!</h1>
-      <p class="subtitle">英語の質問文を読んで、答えを当てよう</p>
+      <p class="subtitle">英語のヒントを読んで、答えを当てよう</p>
       <div class="rules">
         <p>ルール</p>
         <ul>
-          <li>英語の質問文を3つ読んで、それが何かを当てます</li>
-          <li>レベルを選んでチャレンジ！</li>
+          <li>ヒント1だけで答えると 300pt！</li>
+          <li>ヒントを開くほどポイントが下がるよ（200pt → 100pt）</li>
           <li>回答後、和訳とポイント英単語を確認できます</li>
           <li>間違えた問題は復習モードで再挑戦！</li>
         </ul>
@@ -37,7 +37,9 @@
         <span id="quiz-level" class="quiz-level" style="display:none"></span>
         <span id="quiz-score">Score: 0</span>
       </div>
-      <div class="question-prompt">この3つの質問に答えられるものは？</div>
+      <div class="hint-points-bar">
+        <span id="hint-points">いま答えると 300pt</span>
+      </div>
       <ul id="question-list" class="question-list"></ul>
       <div id="choices" class="choices"></div>
     </div>

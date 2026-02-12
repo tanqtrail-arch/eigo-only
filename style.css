@@ -6,9 +6,9 @@
 
 body {
   font-family: "Helvetica Neue", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  background: linear-gradient(135deg, #f0f4ff, #e8ecf8, #faf0ff);
   min-height: 100vh;
-  color: #fff;
+  color: #333;
 }
 
 #app {
@@ -41,7 +41,7 @@ body {
 .title {
   font-size: 3rem;
   text-align: center;
-  background: linear-gradient(90deg, #f093fb, #f5576c, #4facfe);
+  background: linear-gradient(90deg, #e63946, #f4845f, #457b9d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -50,23 +50,25 @@ body {
 
 .subtitle {
   text-align: center;
-  color: #aaa;
+  color: #666;
   font-size: 1.1rem;
   margin-bottom: 40px;
 }
 
 .rules {
-  background: rgba(255, 255, 255, 0.08);
+  background: #fff;
+  border: 1px solid #e0e0e0;
   border-radius: 16px;
   padding: 24px;
   margin-bottom: 32px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .rules p {
   font-size: 1rem;
   font-weight: bold;
   margin-bottom: 12px;
-  color: #f5576c;
+  color: #e63946;
 }
 
 .rules ul {
@@ -78,7 +80,7 @@ body {
   padding: 6px 0;
   padding-left: 20px;
   position: relative;
-  color: #ccc;
+  color: #555;
   font-size: 0.95rem;
   line-height: 1.6;
 }
@@ -87,7 +89,7 @@ body {
   content: "\25B8";
   position: absolute;
   left: 0;
-  color: #4facfe;
+  color: #457b9d;
 }
 
 /* Level Select */
@@ -99,7 +101,7 @@ body {
   font-size: 1.1rem;
   font-weight: bold;
   text-align: center;
-  color: #4facfe;
+  color: #457b9d;
   margin-bottom: 16px;
 }
 
@@ -122,19 +124,19 @@ body {
   gap: 4px;
   width: 100%;
   padding: 20px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid #ddd;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.06);
-  color: #fff;
+  background: #fff;
+  color: #333;
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .btn-level:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(245, 87, 108, 0.5);
-  box-shadow: 0 4px 16px rgba(245, 87, 108, 0.15);
+  border-color: #e63946;
+  box-shadow: 0 4px 16px rgba(230, 57, 70, 0.12);
 }
 
 .btn-level:active {
@@ -144,25 +146,22 @@ body {
 .level-label {
   font-size: 1.2rem;
   font-weight: bold;
-  background: linear-gradient(135deg, #f093fb, #f5576c);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #e63946;
 }
 
 .level-desc {
   font-size: 0.9rem;
-  color: #aaa;
+  color: #888;
 }
 
 .btn-review-level {
   display: block;
   width: 100%;
   padding: 10px;
-  border: 1px solid rgba(79, 172, 254, 0.3);
+  border: 1px solid rgba(69, 123, 157, 0.3);
   border-radius: 10px;
-  background: rgba(79, 172, 254, 0.1);
-  color: #4facfe;
+  background: rgba(69, 123, 157, 0.08);
+  color: #457b9d;
   font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
@@ -170,7 +169,7 @@ body {
 }
 
 .btn-review-level:hover {
-  background: rgba(79, 172, 254, 0.2);
+  background: rgba(69, 123, 157, 0.15);
 }
 
 .btn-review-level:active {
@@ -195,39 +194,39 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #f093fb, #f5576c);
+  background: linear-gradient(135deg, #e63946, #f4845f);
   color: #fff;
   font-size: 1.2rem;
 }
 
 .btn-primary:hover {
   opacity: 0.9;
-  box-shadow: 0 4px 20px rgba(245, 87, 108, 0.4);
+  box-shadow: 0 4px 20px rgba(230, 57, 70, 0.3);
 }
 
 .btn-review {
-  background: rgba(79, 172, 254, 0.15);
-  color: #4facfe;
-  border: 1px solid rgba(79, 172, 254, 0.3);
+  background: rgba(69, 123, 157, 0.1);
+  color: #457b9d;
+  border: 1px solid rgba(69, 123, 157, 0.3);
   margin-top: 12px;
   font-size: 1rem;
 }
 
 .btn-review:hover {
-  background: rgba(79, 172, 254, 0.25);
+  background: rgba(69, 123, 157, 0.2);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.08);
-  color: #aaa;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #f5f5f5;
+  color: #888;
+  border: 1px solid #ddd;
   margin-top: 12px;
   font-size: 1rem;
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  background: #eee;
+  color: #555;
 }
 
 /* Quiz Screen */
@@ -235,16 +234,16 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   font-size: 1rem;
-  color: #aaa;
+  color: #888;
   flex-wrap: wrap;
   gap: 8px;
 }
 
 .quiz-mode {
-  background: rgba(79, 172, 254, 0.2);
-  color: #4facfe;
+  background: rgba(69, 123, 157, 0.15);
+  color: #457b9d;
   font-size: 0.8rem;
   font-weight: bold;
   padding: 4px 12px;
@@ -252,19 +251,28 @@ body {
 }
 
 .quiz-level {
-  background: rgba(240, 147, 251, 0.2);
-  color: #f093fb;
+  background: rgba(230, 57, 70, 0.1);
+  color: #e63946;
   font-size: 0.8rem;
   font-weight: bold;
   padding: 4px 12px;
   border-radius: 12px;
 }
 
-.question-prompt {
+/* ポイント表示バー */
+.hint-points-bar {
   text-align: center;
-  font-size: 1rem;
-  color: #ccc;
   margin-bottom: 16px;
+}
+
+.hint-points-bar span {
+  display: inline-block;
+  background: linear-gradient(135deg, #e63946, #f4845f);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 6px 20px;
+  border-radius: 20px;
 }
 
 /* Question List */
@@ -275,18 +283,19 @@ body {
 }
 
 .question-item {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #fff;
+  border: 1px solid #e0e0e0;
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 10px;
   display: flex;
   align-items: flex-start;
   gap: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
 .question-number {
-  background: linear-gradient(135deg, #f093fb, #f5576c);
+  background: linear-gradient(135deg, #e63946, #f4845f);
   color: #fff;
   font-size: 0.7rem;
   font-weight: bold;
@@ -294,13 +303,37 @@ body {
   border-radius: 8px;
   flex-shrink: 0;
   margin-top: 2px;
+  white-space: nowrap;
 }
 
 .question-text {
   font-size: 1.05rem;
   line-height: 1.7;
-  color: #e8e8e8;
+  color: #333;
   font-style: italic;
+}
+
+/* ロック状態のヒント */
+.hint-locked {
+  cursor: pointer;
+  background: #f8f8f8;
+  border: 1px dashed #ccc;
+  box-shadow: none;
+}
+
+.hint-locked:hover {
+  background: #f0f0f0;
+  border-color: #aaa;
+}
+
+.hint-number-locked {
+  background: #bbb;
+}
+
+.hint-text-locked {
+  color: #aaa;
+  font-style: normal;
+  font-size: 0.95rem;
 }
 
 .fade-in {
@@ -315,17 +348,18 @@ body {
 }
 
 .btn-choice {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
   font-size: 1.15rem;
   padding: 20px 16px;
   animation: slideUp 0.4s ease both;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 .btn-choice:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: #f5f5f5;
+  border-color: #e63946;
 }
 
 .btn-choice:disabled {
@@ -347,25 +381,25 @@ body {
 }
 
 .correct-bg {
-  background: rgba(76, 217, 100, 0.1);
-  border: 1px solid rgba(76, 217, 100, 0.3);
+  background: rgba(42, 157, 143, 0.1);
+  border: 1px solid rgba(42, 157, 143, 0.3);
 }
 
 .incorrect-bg {
-  background: rgba(255, 87, 87, 0.1);
-  border: 1px solid rgba(255, 87, 87, 0.3);
+  background: rgba(230, 57, 70, 0.08);
+  border: 1px solid rgba(230, 57, 70, 0.3);
 }
 
 .correct {
   font-size: 2rem;
   font-weight: bold;
-  color: #4cd964;
+  color: #2a9d8f;
 }
 
 .incorrect {
   font-size: 2rem;
   font-weight: bold;
-  color: #ff5757;
+  color: #e63946;
 }
 
 .answer-detail {
@@ -376,14 +410,21 @@ body {
   text-align: center;
   font-size: 1.3rem;
   margin-bottom: 8px;
+  color: #333;
 }
 
 .answer-points {
   text-align: center;
-  font-size: 1.5rem;
-  color: #ffd700;
+  font-size: 1.3rem;
+  color: #e76f51;
   font-weight: bold;
   margin-bottom: 16px;
+}
+
+/* キーワードハイライト（赤字） */
+.kw-highlight {
+  color: #e63946;
+  font-weight: bold;
 }
 
 /* Translation Section */
@@ -394,15 +435,16 @@ body {
 
 .section-title {
   font-size: 0.95rem;
-  color: #f5576c;
+  color: #e63946;
   font-weight: bold;
   margin-bottom: 12px;
   padding-bottom: 6px;
-  border-bottom: 1px solid rgba(245, 87, 108, 0.3);
+  border-bottom: 1px solid rgba(230, 57, 70, 0.2);
 }
 
 .translation-item {
-  background: rgba(255, 255, 255, 0.04);
+  background: #fff;
+  border: 1px solid #eee;
   border-radius: 10px;
   padding: 12px 16px;
   margin-bottom: 8px;
@@ -410,7 +452,7 @@ body {
 
 .translation-en {
   font-size: 0.95rem;
-  color: #e8e8e8;
+  color: #333;
   font-style: italic;
   line-height: 1.6;
   margin-bottom: 4px;
@@ -418,7 +460,7 @@ body {
 
 .translation-ja {
   font-size: 0.9rem;
-  color: #aaa;
+  color: #777;
   line-height: 1.5;
 }
 
@@ -428,8 +470,8 @@ body {
 }
 
 .keyword-item {
-  background: rgba(79, 172, 254, 0.08);
-  border: 1px solid rgba(79, 172, 254, 0.15);
+  background: rgba(69, 123, 157, 0.06);
+  border: 1px solid rgba(69, 123, 157, 0.15);
   border-radius: 10px;
   padding: 12px 16px;
   margin-bottom: 8px;
@@ -438,18 +480,18 @@ body {
 .keyword-word {
   font-size: 1.05rem;
   font-weight: bold;
-  color: #4facfe;
+  color: #e63946;
   margin-right: 8px;
 }
 
 .keyword-meaning {
   font-size: 1rem;
-  color: #fff;
+  color: #333;
 }
 
 .keyword-note {
   font-size: 0.85rem;
-  color: #999;
+  color: #888;
   margin-top: 4px;
   line-height: 1.5;
 }
@@ -459,7 +501,7 @@ body {
   text-align: center;
   font-size: 1.8rem;
   margin-bottom: 24px;
-  color: #f5576c;
+  color: #e63946;
 }
 
 .final-score {
@@ -476,12 +518,12 @@ body {
 .rank-label {
   font-size: 1.3rem;
   margin: 8px 0;
-  color: #ccc;
+  color: #555;
 }
 
 .score-display {
   font-size: 1.5rem;
-  color: #fff;
+  color: #333;
   margin-top: 8px;
 }
 
@@ -501,11 +543,11 @@ body {
 }
 
 .item-correct {
-  background: rgba(76, 217, 100, 0.08);
+  background: rgba(42, 157, 143, 0.08);
 }
 
 .item-incorrect {
-  background: rgba(255, 87, 87, 0.08);
+  background: rgba(230, 57, 70, 0.06);
 }
 
 .breakdown-icon {
@@ -517,8 +559,13 @@ body {
   flex: 1;
 }
 
+.breakdown-hints {
+  font-size: 0.8rem;
+  color: #888;
+}
+
 .breakdown-points {
-  color: #ffd700;
+  color: #e76f51;
   font-weight: bold;
   min-width: 60px;
   text-align: right;

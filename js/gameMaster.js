@@ -1,12 +1,12 @@
 /**
  * GameMaster Agent
  * - ゲーム進行を管理する
- * - スコア計算（正解 = 100点）
+ * - スコア計算（ヒント数に応じて 300/200/100 点）
  * - 正誤判定
  * - 間違えた問題のストック（localStorage、レベル別）
  */
 const GameMaster = (() => {
-  const POINTS_PER_CORRECT = 100;
+  const POINTS_BY_HINTS = { 1: 300, 2: 200, 3: 100 };
   const STORAGE_KEY_PREFIX = "eigo-only-review";
 
   let score = 0;
@@ -36,7 +36,8 @@ const GameMaster = (() => {
   function checkAnswer(selectedAnswer) {
     const question = QuestionMaster.getCurrentQuestion();
     const correct = selectedAnswer === question.answer;
-    const points = correct ? POINTS_PER_CORRECT : 0;
+    const hintsUsed = QuestionMaster.getHintsRevealed();
+    const points = correct ? POINTS_BY_HINTS[hintsUsed] : 0;
 
     score += points;
 
@@ -46,26 +47,31 @@ const GameMaster = (() => {
       translations: question.translations,
       keywords: question.keywords,
       correct,
-      points
+      points,
+      hintsUsed
     });
 
     const level = question.level;
-    // 間違えた問題をストックに追加
     if (!correct) {
       addToReviewStock(question.answer, level);
     } else {
-      // 正解したら復習ストックから削除
       removeFromReviewStock(question.answer, level);
     }
 
     return {
       correct,
       points,
+      hintsUsed,
       answer: question.answer,
       questions: question.questions,
       translations: question.translations,
       keywords: question.keywords
     };
+  }
+
+  function getPointsForCurrentHints() {
+    const hints = QuestionMaster.getHintsRevealed();
+    return POINTS_BY_HINTS[hints];
   }
 
   function getScore() {
@@ -85,17 +91,17 @@ const GameMaster = (() => {
   }
 
   function getMaxPossibleScore() {
-    return QuestionMaster.getProgress().total * POINTS_PER_CORRECT;
+    return QuestionMaster.getProgress().total * 300;
   }
 
   function getRank() {
     const maxScore = getMaxPossibleScore();
     const percentage = score / maxScore;
-    if (percentage >= 0.9) return { rank: "S", label: "英語マスター！", color: "#ffd700" };
-    if (percentage >= 0.7) return { rank: "A", label: "すごい！", color: "#ff6b6b" };
-    if (percentage >= 0.5) return { rank: "B", label: "いい感じ！", color: "#4ecdc4" };
-    if (percentage >= 0.3) return { rank: "C", label: "まあまあ！", color: "#45b7d1" };
-    return { rank: "D", label: "がんばろう！", color: "#96ceb4" };
+    if (percentage >= 0.9) return { rank: "S", label: "英語マスター！", color: "#e63946" };
+    if (percentage >= 0.7) return { rank: "A", label: "すごい！", color: "#e76f51" };
+    if (percentage >= 0.5) return { rank: "B", label: "いい感じ！", color: "#2a9d8f" };
+    if (percentage >= 0.3) return { rank: "C", label: "まあまあ！", color: "#457b9d" };
+    return { rank: "D", label: "がんばろう！", color: "#6c757d" };
   }
 
   // --- 復習ストック管理（レベル別） ---
@@ -136,6 +142,7 @@ const GameMaster = (() => {
   return {
     startGame,
     checkAnswer,
+    getPointsForCurrentHints,
     getScore,
     getResults,
     getIsReviewMode,

@@ -9,7 +9,6 @@ window.app = (() => {
   function init() {
     document.getElementById("btn-next").addEventListener("click", nextQuestion);
     document.getElementById("btn-retry").addEventListener("click", () => {
-      // 同じレベルで再挑戦
       if (selectedLevel) {
         startGameWithLevel(selectedLevel);
       } else {
@@ -23,7 +22,6 @@ window.app = (() => {
     });
     document.getElementById("btn-back-home").addEventListener("click", goToStart);
 
-    // 初回表示
     Renderer.renderStartScreen();
   }
 
@@ -51,6 +49,11 @@ window.app = (() => {
     }, 300);
   }
 
+  function revealHint() {
+    QuestionMaster.revealNextHint();
+    Renderer.renderQuiz();
+  }
+
   function nextQuestion() {
     const hasMore = QuestionMaster.nextQuestion();
     if (hasMore) {
@@ -62,5 +65,5 @@ window.app = (() => {
 
   init();
 
-  return { handleAnswer, startGameWithLevel, startReviewWithLevel };
+  return { handleAnswer, startGameWithLevel, startReviewWithLevel, revealHint };
 })();

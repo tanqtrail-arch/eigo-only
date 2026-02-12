@@ -1,7 +1,8 @@
 /**
  * Renderer Agent
  * - 画面描画を担当する
- * - 画面切り替え、アニメーション、DOM操作
+ * - アコーディオン式ヒント表示
+ * - キーワード赤字ハイライト
  */
 const Renderer = (() => {
   const screens = {
@@ -14,6 +15,15 @@ const Renderer = (() => {
   function showScreen(name) {
     Object.values(screens).forEach(s => s.classList.remove("active"));
     screens[name].classList.add("active");
+  }
+
+  // キーワードをハイライトするヘルパー
+  function highlightKeyword(text, keyword) {
+    if (!keyword) return text;
+    // 単語の前後を考慮した正規表現（大文字小文字無視）
+    const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const regex = new RegExp(`(${escaped})`, "gi");
+    return text.replace(regex, '<span class="kw-highlight">$1</span>');
   }
 
   function renderStartScreen() {
@@ -37,7 +47,6 @@ const Renderer = (() => {
       });
       wrapper.appendChild(btn);
 
-      // 復習ボタン（該当レベルに復習問題がある場合のみ表示）
       if (GameMaster.hasReviewStock(level.id)) {
         const count = GameMaster.getReviewStockCount(level.id);
         const reviewBtn = document.createElement("button");
@@ -62,6 +71,7 @@ const Renderer = (() => {
     const isReview = GameMaster.getIsReviewMode();
     const level = GameMaster.getCurrentLevel();
     const levels = QuestionMaster.getLevels();
+    const hintsRevealed = QuestionMaster.getHintsRevealed();
 
     document.getElementById("quiz-progress").textContent =
       `Q${progress.current} / ${progress.total}`;
@@ -86,14 +96,30 @@ const Renderer = (() => {
       levelLabel.style.display = "none";
     }
 
-    // 3つの英語質問文を表示
+    // ポイント表示
+    const currentPts = GameMaster.getPointsForCurrentHints();
+    document.getElementById("hint-points").textContent = `いま答えると ${currentPts}pt`;
+
+    // ヒント表示（アコーディオン）
     const questionsEl = document.getElementById("question-list");
     questionsEl.innerHTML = "";
+
     question.questions.forEach((q, i) => {
       const li = document.createElement("li");
       li.className = "question-item fade-in";
       li.style.animationDelay = `${i * 0.15}s`;
-      li.innerHTML = `<span class="question-number">Q${i + 1}</span><span class="question-text">${q}</span>`;
+
+      if (i < hintsRevealed) {
+        // 表示済みヒント
+        li.innerHTML = `<span class="question-number">ヒント${i + 1}</span><span class="question-text">${q}</span>`;
+      } else {
+        // 非表示（ロック状態）
+        li.classList.add("hint-locked");
+        li.innerHTML = `<span class="question-number hint-number-locked">ヒント${i + 1}</span><span class="question-text hint-text-locked">タップして開く</span>`;
+        li.addEventListener("click", () => {
+          window.app.revealHint();
+        });
+      }
       questionsEl.appendChild(li);
     });
 
@@ -131,17 +157,20 @@ const Renderer = (() => {
 
     let detailHTML = `<p class="answer-word">答え: <strong>${result.answer}</strong></p>`;
     if (result.correct) {
-      detailHTML += `<p class="answer-points">+${result.points}pt</p>`;
+      detailHTML += `<p class="answer-points">+${result.points}pt（ヒント${result.hintsUsed}で正解）</p>`;
     }
 
-    // 質問文の和訳
+    // 質問文の和訳（キーワードを赤字ハイライト）
     detailHTML += `<div class="translation-section">`;
-    detailHTML += `<h3 class="section-title">質問文と和訳</h3>`;
+    detailHTML += `<h3 class="section-title">ヒントと和訳</h3>`;
     result.questions.forEach((q, i) => {
+      const kw = result.keywords[i];
+      const highlightedEn = kw ? highlightKeyword(q, kw.word) : q;
+      const highlightedJa = kw ? highlightKeyword(result.translations[i], kw.meaning) : result.translations[i];
       detailHTML += `
         <div class="translation-item">
-          <p class="translation-en">${q}</p>
-          <p class="translation-ja">${result.translations[i]}</p>
+          <p class="translation-en">${highlightedEn}</p>
+          <p class="translation-ja">${highlightedJa}</p>
         </div>
       `;
     });
@@ -200,10 +229,12 @@ const Renderer = (() => {
     let breakdownHTML = '<div class="breakdown-list">';
     results.forEach((r, i) => {
       const icon = r.correct ? "&#x2B55;" : "&#x274C;";
+      const hintsLabel = r.correct ? `ヒント${r.hintsUsed}` : "";
       breakdownHTML += `
         <div class="breakdown-item ${r.correct ? 'item-correct' : 'item-incorrect'}">
           <span class="breakdown-icon">${icon}</span>
           <span class="breakdown-answer">Q${i + 1}: ${r.answer}</span>
+          <span class="breakdown-hints">${hintsLabel}</span>
           <span class="breakdown-points">${r.correct ? '+' + r.points + 'pt' : '0pt'}</span>
         </div>
       `;
