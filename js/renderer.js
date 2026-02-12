@@ -16,43 +16,50 @@ const Renderer = (() => {
     screens[name].classList.add("active");
   }
 
+  function renderStartScreen() {
+    const reviewBtn = document.getElementById("btn-review");
+    if (GameMaster.hasReviewStock()) {
+      const count = GameMaster.getReviewStockCount();
+      reviewBtn.textContent = `復習する（${count}問）`;
+      reviewBtn.style.display = "block";
+    } else {
+      reviewBtn.style.display = "none";
+    }
+    showScreen("start");
+  }
+
   function renderQuiz() {
     const progress = QuestionMaster.getProgress();
     const question = QuestionMaster.getCurrentQuestion();
-    const hint = QuestionMaster.getCurrentHint();
-    const hintLevel = QuestionMaster.getHintLevel();
     const score = GameMaster.getScore();
+    const isReview = GameMaster.getIsReviewMode();
 
     document.getElementById("quiz-progress").textContent =
       `Q${progress.current} / ${progress.total}`;
     document.getElementById("quiz-score").textContent =
       `Score: ${score}`;
-    document.getElementById("hint-level").textContent =
-      `Hint Level ${hintLevel + 1} / ${QuestionMaster.MAX_HINTS}`;
 
-    // Update hint level indicator style
-    const hintLevelEl = document.getElementById("hint-level");
-    hintLevelEl.className = "hint-level level-" + (hintLevel + 1);
-
-    // Render hint with animation
-    const hintText = document.getElementById("hint-text");
-    hintText.classList.remove("fade-in");
-    void hintText.offsetWidth; // trigger reflow
-    hintText.textContent = hint;
-    hintText.classList.add("fade-in");
-
-    // Show/hide next hint button
-    const btnNextHint = document.getElementById("btn-next-hint");
-    if (QuestionMaster.isLastHint()) {
-      btnNextHint.style.display = "none";
+    // 復習モード表示
+    const modeLabel = document.getElementById("quiz-mode");
+    if (isReview) {
+      modeLabel.textContent = "復習モード";
+      modeLabel.style.display = "inline-block";
     } else {
-      btnNextHint.style.display = "block";
-      const nextLevel = hintLevel + 2;
-      btnNextHint.textContent =
-        nextLevel === 2 ? "もう少しヒントを見る (-100pt)" : "最後のヒント (-200pt)";
+      modeLabel.style.display = "none";
     }
 
-    // Render choices
+    // 3つの英語質問文を表示
+    const questionsEl = document.getElementById("question-list");
+    questionsEl.innerHTML = "";
+    question.questions.forEach((q, i) => {
+      const li = document.createElement("li");
+      li.className = "question-item fade-in";
+      li.style.animationDelay = `${i * 0.15}s`;
+      li.innerHTML = `<span class="question-number">Q${i + 1}</span><span class="question-text">${q}</span>`;
+      questionsEl.appendChild(li);
+    });
+
+    // 4択を表示
     const choicesEl = document.getElementById("choices");
     choicesEl.innerHTML = "";
     question.shuffledChoices.forEach((choice, i) => {
@@ -88,9 +95,37 @@ const Renderer = (() => {
     if (result.correct) {
       detailHTML += `<p class="answer-points">+${result.points}pt</p>`;
     }
+
+    // 質問文の和訳
+    detailHTML += `<div class="translation-section">`;
+    detailHTML += `<h3 class="section-title">質問文と和訳</h3>`;
+    result.questions.forEach((q, i) => {
+      detailHTML += `
+        <div class="translation-item">
+          <p class="translation-en">${q}</p>
+          <p class="translation-ja">${result.translations[i]}</p>
+        </div>
+      `;
+    });
+    detailHTML += `</div>`;
+
+    // キーワード解説
+    detailHTML += `<div class="keyword-section">`;
+    detailHTML += `<h3 class="section-title">ポイント英単語</h3>`;
+    result.keywords.forEach(kw => {
+      detailHTML += `
+        <div class="keyword-item">
+          <span class="keyword-word">${kw.word}</span>
+          <span class="keyword-meaning">${kw.meaning}</span>
+          <p class="keyword-note">${kw.note}</p>
+        </div>
+      `;
+    });
+    detailHTML += `</div>`;
+
     detailEl.innerHTML = detailHTML;
 
-    // Check if this was the last question
+    // 次へボタンのテキスト
     const progress = QuestionMaster.getProgress();
     const btnNext = document.getElementById("btn-next");
     if (progress.current >= progress.total) {
@@ -107,6 +142,10 @@ const Renderer = (() => {
     const maxScore = GameMaster.getMaxPossibleScore();
     const rank = GameMaster.getRank();
     const results = GameMaster.getResults();
+    const isReview = GameMaster.getIsReviewMode();
+
+    const titleEl = document.getElementById("final-title-text");
+    titleEl.textContent = isReview ? "復習結果" : "結果発表";
 
     document.getElementById("final-score").innerHTML = `
       <div class="rank" style="color: ${rank.color}">${rank.rank}</div>
@@ -122,18 +161,28 @@ const Renderer = (() => {
           <span class="breakdown-icon">${icon}</span>
           <span class="breakdown-answer">Q${i + 1}: ${r.answer}</span>
           <span class="breakdown-points">${r.correct ? '+' + r.points + 'pt' : '0pt'}</span>
-          <span class="breakdown-hint">Hint Lv.${r.hintLevel}</span>
         </div>
       `;
     });
     breakdownHTML += "</div>";
     document.getElementById("final-breakdown").innerHTML = breakdownHTML;
 
+    // 復習ボタン表示
+    const reviewBtn = document.getElementById("btn-review-final");
+    if (GameMaster.hasReviewStock()) {
+      const count = GameMaster.getReviewStockCount();
+      reviewBtn.textContent = `間違えた問題を復習する（${count}問）`;
+      reviewBtn.style.display = "block";
+    } else {
+      reviewBtn.style.display = "none";
+    }
+
     showScreen("final");
   }
 
   return {
     showScreen,
+    renderStartScreen,
     renderQuiz,
     renderAnswer,
     renderFinal

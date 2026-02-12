@@ -1,39 +1,64 @@
 /**
  * GameMaster Agent
  * - ゲーム進行を管理する
- * - スコア計算（早く答えるほど高得点）
+ * - スコア計算（正解 = 100点）
  * - 正誤判定
+ * - 間違えた問題のストック（localStorage）
  */
 const GameMaster = (() => {
-  // Hint Level 1 で正解 = 300点, Level 2 = 200点, Level 3 = 100点
-  const SCORE_BY_HINT = [300, 200, 100];
+  const POINTS_PER_CORRECT = 100;
+  const STORAGE_KEY = "eigo-only-review";
 
   let score = 0;
-  let results = []; // { question, correct, points, hintLevel }
+  let results = [];
+  let isReviewMode = false;
 
-  function startGame() {
+  function startGame(reviewMode) {
     score = 0;
     results = [];
-    QuestionMaster.prepareGame();
+    isReviewMode = !!reviewMode;
+
+    if (reviewMode) {
+      const reviewAnswers = getReviewStock();
+      const reviewQuestions = QuestionMaster.getQuestionsByAnswers(reviewAnswers);
+      QuestionMaster.prepareGame(reviewQuestions);
+    } else {
+      QuestionMaster.prepareGame();
+    }
   }
 
   function checkAnswer(selectedAnswer) {
     const question = QuestionMaster.getCurrentQuestion();
     const correct = selectedAnswer === question.answer;
-    const hintLevel = QuestionMaster.getHintLevel();
-    const points = correct ? SCORE_BY_HINT[hintLevel] : 0;
+    const points = correct ? POINTS_PER_CORRECT : 0;
 
     score += points;
 
     results.push({
       answer: question.answer,
-      hints: question.hints,
+      questions: question.questions,
+      translations: question.translations,
+      keywords: question.keywords,
       correct,
-      points,
-      hintLevel: hintLevel + 1
+      points
     });
 
-    return { correct, points, answer: question.answer };
+    // 間違えた問題をストックに追加
+    if (!correct) {
+      addToReviewStock(question.answer);
+    } else {
+      // 正解したら復習ストックから削除
+      removeFromReviewStock(question.answer);
+    }
+
+    return {
+      correct,
+      points,
+      answer: question.answer,
+      questions: question.questions,
+      translations: question.translations,
+      keywords: question.keywords
+    };
   }
 
   function getScore() {
@@ -44,8 +69,12 @@ const GameMaster = (() => {
     return results;
   }
 
+  function getIsReviewMode() {
+    return isReviewMode;
+  }
+
   function getMaxPossibleScore() {
-    return QuestionMaster.getProgress().total * SCORE_BY_HINT[0];
+    return QuestionMaster.getProgress().total * POINTS_PER_CORRECT;
   }
 
   function getRank() {
@@ -58,12 +87,47 @@ const GameMaster = (() => {
     return { rank: "D", label: "がんばろう！", color: "#96ceb4" };
   }
 
+  // --- 復習ストック管理 ---
+  function getReviewStock() {
+    try {
+      const data = localStorage.getItem(STORAGE_KEY);
+      return data ? JSON.parse(data) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function addToReviewStock(answer) {
+    const stock = getReviewStock();
+    if (!stock.includes(answer)) {
+      stock.push(answer);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(stock));
+    }
+  }
+
+  function removeFromReviewStock(answer) {
+    const stock = getReviewStock();
+    const updated = stock.filter(a => a !== answer);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+  }
+
+  function hasReviewStock() {
+    return getReviewStock().length > 0;
+  }
+
+  function getReviewStockCount() {
+    return getReviewStock().length;
+  }
+
   return {
     startGame,
     checkAnswer,
     getScore,
     getResults,
+    getIsReviewMode,
     getMaxPossibleScore,
-    getRank
+    getRank,
+    hasReviewStock,
+    getReviewStockCount
   };
 })();

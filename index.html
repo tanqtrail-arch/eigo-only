@@ -11,29 +11,29 @@
     <!-- Start Screen -->
     <div id="screen-start" class="screen active">
       <h1 class="title">Eigo Only!</h1>
-      <p class="subtitle">英語のヒントから答えを当てよう</p>
+      <p class="subtitle">英語の質問文を読んで、答えを当てよう</p>
       <div class="rules">
         <p>ルール</p>
         <ul>
-          <li>英語の説明文を読んで、それが何かを当てます</li>
-          <li>ヒントは3段階。だんだん簡単になります</li>
-          <li>早く答えるほど高得点！</li>
+          <li>英語の質問文を3つ読んで、それが何かを当てます</li>
+          <li>質問文はすべて中学英語レベルです</li>
+          <li>回答後、和訳とポイント英単語を確認できます</li>
+          <li>間違えた問題は復習モードで再挑戦！</li>
         </ul>
       </div>
       <button id="btn-start" class="btn btn-primary">スタート</button>
+      <button id="btn-review" class="btn btn-review" style="display:none">復習する</button>
     </div>
 
     <!-- Quiz Screen -->
     <div id="screen-quiz" class="screen">
       <div class="quiz-header">
-        <span id="quiz-progress">Q1 / 10</span>
+        <span id="quiz-progress">Q1 / 7</span>
+        <span id="quiz-mode" class="quiz-mode" style="display:none">復習モード</span>
         <span id="quiz-score">Score: 0</span>
       </div>
-      <div id="hint-level" class="hint-level">Hint Level 1 / 3</div>
-      <div id="hint-box" class="hint-box">
-        <p id="hint-text"></p>
-      </div>
-      <button id="btn-next-hint" class="btn btn-hint">もっとヒントを見る</button>
+      <div class="question-prompt">この3つの質問に答えられるものは？</div>
+      <ul id="question-list" class="question-list"></ul>
       <div id="choices" class="choices"></div>
     </div>
 
@@ -46,9 +46,10 @@
 
     <!-- Final Score Screen -->
     <div id="screen-final" class="screen">
-      <h2 class="final-title">結果発表</h2>
+      <h2 id="final-title-text" class="final-title">結果発表</h2>
       <div id="final-score" class="final-score"></div>
       <div id="final-breakdown" class="final-breakdown"></div>
+      <button id="btn-review-final" class="btn btn-review" style="display:none">間違えた問題を復習する</button>
       <button id="btn-retry" class="btn btn-primary">もう一度遊ぶ</button>
     </div>
   </div>
