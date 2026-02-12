@@ -1,11 +1,436 @@
 /**
  * QuestionMaster Agent
  * - お題を管理し、英語の質問文を3つ提供する
- * - 各問題に3つの英語質問文（中3レベル）+ 和訳 + キーワード解説を持つ
+ * - レベル別: 小4 / 中1 / 中3
  */
 const QuestionMaster = (() => {
+  // レベル定義
+  const LEVELS = {
+    es4: { id: "es4", label: "小学4年", description: "かんたんな英語でチャレンジ！" },
+    jh1: { id: "jh1", label: "中学1年", description: "基本の英文を読んでみよう！" },
+    jh3: { id: "jh3", label: "中学3年", description: "長めの英文にチャレンジ！" }
+  };
+
   const allQuestions = [
+    // ===========================
+    // 小学4年レベル (es4)
+    // - 短い単語・簡単なフレーズ中心
+    // - I, you, this, it などの基本語
+    // ===========================
     {
+      level: "es4",
+      answer: "りんご",
+      questions: [
+        "Red or green fruit.",
+        "You eat it every day.",
+        "A round fruit."
+      ],
+      translations: [
+        "赤か緑の果物。",
+        "毎日食べるもの。",
+        "丸い果物。"
+      ],
+      keywords: [
+        { word: "red", meaning: "赤い", note: "色を表す言葉。Red light（赤信号）" },
+        { word: "fruit", meaning: "果物", note: "食べ物の種類を表す言葉" },
+        { word: "round", meaning: "丸い", note: "形を表す言葉。a round ball（丸いボール）" }
+      ],
+      choices: ["りんご", "みかん", "バナナ", "もも"]
+    },
+    {
+      level: "es4",
+      answer: "犬",
+      questions: [
+        "It says 'woof woof'.",
+        "A popular pet.",
+        "It can run fast."
+      ],
+      translations: [
+        "「ワンワン」と鳴く。",
+        "人気のペット。",
+        "速く走れる。"
+      ],
+      keywords: [
+        { word: "pet", meaning: "ペット", note: "家で飼う動物のこと" },
+        { word: "run", meaning: "走る", note: "足を使って速く動くこと" },
+        { word: "fast", meaning: "速い", note: "スピードが速いこと" }
+      ],
+      choices: ["猫", "犬", "うさぎ", "ハムスター"]
+    },
+    {
+      level: "es4",
+      answer: "太陽",
+      questions: [
+        "It is very hot.",
+        "Yellow and bright.",
+        "You see it in the day."
+      ],
+      translations: [
+        "とても熱い。",
+        "黄色くて明るい。",
+        "昼間に見える。"
+      ],
+      keywords: [
+        { word: "hot", meaning: "熱い・暑い", note: "温度が高いこと" },
+        { word: "yellow", meaning: "黄色い", note: "色を表す言葉" },
+        { word: "bright", meaning: "明るい", note: "光っている様子" }
+      ],
+      choices: ["月", "太陽", "星", "雲"]
+    },
+    {
+      level: "es4",
+      answer: "猫",
+      questions: [
+        "It says 'meow'.",
+        "It likes fish.",
+        "It sleeps a lot."
+      ],
+      translations: [
+        "「ニャー」と鳴く。",
+        "魚が好き。",
+        "たくさん寝る。"
+      ],
+      keywords: [
+        { word: "fish", meaning: "魚", note: "水の中に住む生き物" },
+        { word: "sleep", meaning: "寝る", note: "目を閉じて休むこと" },
+        { word: "like", meaning: "好き", note: "I like cats.（猫が好き）" }
+      ],
+      choices: ["犬", "猫", "うさぎ", "鳥"]
+    },
+    {
+      level: "es4",
+      answer: "サッカー",
+      questions: [
+        "You kick a ball.",
+        "A very popular sport.",
+        "You cannot use your hands."
+      ],
+      translations: [
+        "ボールを蹴る。",
+        "とても人気のスポーツ。",
+        "手を使えない。"
+      ],
+      keywords: [
+        { word: "kick", meaning: "蹴る", note: "足でボールを蹴ること" },
+        { word: "ball", meaning: "ボール", note: "丸い形のもの" },
+        { word: "sport", meaning: "スポーツ", note: "体を動かす遊びや競技" }
+      ],
+      choices: ["野球", "サッカー", "バスケ", "テニス"]
+    },
+    {
+      level: "es4",
+      answer: "ピアノ",
+      questions: [
+        "Black and white keys.",
+        "You play music on it.",
+        "A big instrument."
+      ],
+      translations: [
+        "黒と白の鍵盤。",
+        "音楽を演奏する。",
+        "大きな楽器。"
+      ],
+      keywords: [
+        { word: "key", meaning: "鍵盤", note: "ピアノの白と黒の部分" },
+        { word: "music", meaning: "音楽", note: "歌やメロディーのこと" },
+        { word: "play", meaning: "演奏する", note: "楽器を弾くこと。遊ぶという意味もある" }
+      ],
+      choices: ["ギター", "バイオリン", "ピアノ", "ドラム"]
+    },
+    {
+      level: "es4",
+      answer: "傘",
+      questions: [
+        "You use it in the rain.",
+        "You hold it above your head.",
+        "It keeps you dry."
+      ],
+      translations: [
+        "雨の日に使う。",
+        "頭の上にかざす。",
+        "濡れないようにする。"
+      ],
+      keywords: [
+        { word: "rain", meaning: "雨", note: "空から水が降ること" },
+        { word: "hold", meaning: "持つ", note: "手で持つこと" },
+        { word: "dry", meaning: "乾いた", note: "濡れていない状態" }
+      ],
+      choices: ["帽子", "傘", "レインコート", "長靴"]
+    },
+    {
+      level: "es4",
+      answer: "アイスクリーム",
+      questions: [
+        "It is cold and sweet.",
+        "You eat it in summer.",
+        "It melts fast."
+      ],
+      translations: [
+        "冷たくて甘い。",
+        "夏に食べる。",
+        "すぐ溶ける。"
+      ],
+      keywords: [
+        { word: "cold", meaning: "冷たい", note: "温度が低いこと" },
+        { word: "sweet", meaning: "甘い", note: "砂糖のような味" },
+        { word: "summer", meaning: "夏", note: "暑い季節" }
+      ],
+      choices: ["ケーキ", "アイスクリーム", "チョコレート", "プリン"]
+    },
+    {
+      level: "es4",
+      answer: "自転車",
+      questions: [
+        "It has two wheels.",
+        "You ride it with your feet.",
+        "No engine needed."
+      ],
+      translations: [
+        "車輪が2つある。",
+        "足を使って乗る。",
+        "エンジンはいらない。"
+      ],
+      keywords: [
+        { word: "wheel", meaning: "車輪", note: "丸いタイヤの部分" },
+        { word: "ride", meaning: "乗る", note: "自転車や馬に乗ること" },
+        { word: "feet", meaning: "足", note: "foot（足）の複数形" }
+      ],
+      choices: ["自動車", "バイク", "自転車", "スケートボード"]
+    },
+    {
+      level: "es4",
+      answer: "学校",
+      questions: [
+        "You go there every day.",
+        "You study with friends.",
+        "Teachers are there."
+      ],
+      translations: [
+        "毎日そこへ行く。",
+        "友達と勉強する。",
+        "先生がいる。"
+      ],
+      keywords: [
+        { word: "study", meaning: "勉強する", note: "学ぶこと" },
+        { word: "friend", meaning: "友達", note: "仲の良い人" },
+        { word: "teacher", meaning: "先生", note: "教えてくれる人" }
+      ],
+      choices: ["公園", "学校", "図書館", "病院"]
+    },
+
+    // ===========================
+    // 中学1年レベル (jh1)
+    // - be動詞、一般動詞の基本
+    // - 簡単な疑問文
+    // ===========================
+    {
+      level: "jh1",
+      answer: "りんご",
+      questions: [
+        "This fruit is red or green.",
+        "You can make juice with this fruit.",
+        "People say it keeps the doctor away."
+      ],
+      translations: [
+        "この果物は赤か緑です。",
+        "この果物でジュースを作れます。",
+        "これがあればお医者さんいらずと言われます。"
+      ],
+      keywords: [
+        { word: "fruit", meaning: "果物", note: "食べ物の種類を表す言葉" },
+        { word: "make", meaning: "作る", note: "何かを作ること。make juice（ジュースを作る）" },
+        { word: "doctor", meaning: "医者", note: "病気を治してくれる人" }
+      ],
+      choices: ["りんご", "みかん", "バナナ", "もも"]
+    },
+    {
+      level: "jh1",
+      answer: "猫",
+      questions: [
+        "This pet says 'meow' and likes fish.",
+        "This animal sleeps many hours every day.",
+        "It has soft fur and a long tail."
+      ],
+      translations: [
+        "このペットは「ニャー」と鳴いて魚が好きです。",
+        "この動物は毎日何時間も寝ます。",
+        "柔らかい毛と長いしっぽがあります。"
+      ],
+      keywords: [
+        { word: "soft", meaning: "柔らかい", note: "さわり心地が良い様子" },
+        { word: "tail", meaning: "しっぽ", note: "動物の体の後ろにある部分" },
+        { word: "every day", meaning: "毎日", note: "1日も休まず、という意味" }
+      ],
+      choices: ["犬", "猫", "うさぎ", "ハムスター"]
+    },
+    {
+      level: "jh1",
+      answer: "富士山",
+      questions: [
+        "This is the tallest mountain in Japan.",
+        "You can see it from Tokyo on a clear day.",
+        "It has snow on top in winter."
+      ],
+      translations: [
+        "日本で一番高い山です。",
+        "晴れた日に東京から見えます。",
+        "冬には頂上に雪があります。"
+      ],
+      keywords: [
+        { word: "tallest", meaning: "一番高い", note: "tall（高い）の最上級の形" },
+        { word: "mountain", meaning: "山", note: "地面が高くなっている場所" },
+        { word: "snow", meaning: "雪", note: "冬に空から降る白いもの" }
+      ],
+      choices: ["エベレスト", "富士山", "阿蘇山", "高尾山"]
+    },
+    {
+      level: "jh1",
+      answer: "寿司",
+      questions: [
+        "This food is made with rice and fish.",
+        "You eat it with soy sauce.",
+        "You can eat it at a restaurant with plates that go around."
+      ],
+      translations: [
+        "この食べ物はお米と魚で作られます。",
+        "醤油と一緒に食べます。",
+        "お皿が回転するレストランで食べられます。"
+      ],
+      keywords: [
+        { word: "rice", meaning: "お米・ごはん", note: "日本の主食" },
+        { word: "soy sauce", meaning: "醤油", note: "soy は「大豆」という意味" },
+        { word: "restaurant", meaning: "レストラン", note: "食事をするお店" }
+      ],
+      choices: ["ラーメン", "天ぷら", "寿司", "うどん"]
+    },
+    {
+      level: "jh1",
+      answer: "桜",
+      questions: [
+        "These pink flowers bloom in spring.",
+        "People eat and drink under these trees.",
+        "The flowers only last about one week."
+      ],
+      translations: [
+        "春に咲くピンクの花です。",
+        "この木の下で飲み食いします。",
+        "花は約1週間しかもちません。"
+      ],
+      keywords: [
+        { word: "bloom", meaning: "咲く", note: "花が開くこと" },
+        { word: "spring", meaning: "春", note: "四季の一つ。3月〜5月ごろ" },
+        { word: "last", meaning: "続く・もつ", note: "期間を表す動詞" }
+      ],
+      choices: ["バラ", "桜", "ひまわり", "チューリップ"]
+    },
+    {
+      level: "jh1",
+      answer: "電車",
+      questions: [
+        "People ride this to go to work or school.",
+        "It stops at many stations.",
+        "It is very crowded in the morning in Japan."
+      ],
+      translations: [
+        "通勤・通学に乗ります。",
+        "たくさんの駅に止まります。",
+        "日本の朝はとても混んでいます。"
+      ],
+      keywords: [
+        { word: "ride", meaning: "乗る", note: "乗り物に乗ること" },
+        { word: "station", meaning: "駅", note: "電車が止まる場所" },
+        { word: "crowded", meaning: "混雑した", note: "人がたくさんいる状態" }
+      ],
+      choices: ["バス", "タクシー", "電車", "飛行機"]
+    },
+    {
+      level: "jh1",
+      answer: "チョコレート",
+      questions: [
+        "This sweet candy is brown.",
+        "Girls give this to boys on February 14th in Japan.",
+        "It is made from cacao beans."
+      ],
+      translations: [
+        "この甘いお菓子は茶色です。",
+        "日本で2月14日に女の子が男の子にあげます。",
+        "カカオ豆から作られます。"
+      ],
+      keywords: [
+        { word: "sweet", meaning: "甘い", note: "味を表す言葉。反対は bitter（苦い）" },
+        { word: "brown", meaning: "茶色の", note: "色を表す言葉" },
+        { word: "give", meaning: "あげる", note: "人に何かを渡すこと" }
+      ],
+      choices: ["クッキー", "ケーキ", "アイスクリーム", "チョコレート"]
+    },
+    {
+      level: "jh1",
+      answer: "時計",
+      questions: [
+        "This tells you the time.",
+        "You can wear it on your arm.",
+        "It has two hands and numbers 1 to 12."
+      ],
+      translations: [
+        "時間を教えてくれます。",
+        "腕につけられます。",
+        "2本の針と1から12の数字があります。"
+      ],
+      keywords: [
+        { word: "time", meaning: "時間", note: "何時何分を表すもの" },
+        { word: "wear", meaning: "身につける", note: "服や時計をつけること" },
+        { word: "hand", meaning: "針", note: "時計の針のこと。「手」の意味もある" }
+      ],
+      choices: ["時計", "カレンダー", "砂時計", "温度計"]
+    },
+    {
+      level: "jh1",
+      answer: "ペンギン",
+      questions: [
+        "This bird is black and white.",
+        "It cannot fly but it can swim well.",
+        "It lives in cold places and walks in a cute way."
+      ],
+      translations: [
+        "この鳥は白黒です。",
+        "飛べないけど泳ぎが上手です。",
+        "寒い場所に住んでいてかわいい歩き方をします。"
+      ],
+      keywords: [
+        { word: "fly", meaning: "飛ぶ", note: "空を飛ぶこと" },
+        { word: "swim", meaning: "泳ぐ", note: "水の中を泳ぐこと" },
+        { word: "cute", meaning: "かわいい", note: "見た目がかわいいこと" }
+      ],
+      choices: ["ペンギン", "フラミンゴ", "アヒル", "ワシ"]
+    },
+    {
+      level: "jh1",
+      answer: "消しゴム",
+      questions: [
+        "You use this when you make a mistake with a pencil.",
+        "This small white thing is in your pencil case.",
+        "It can erase pencil marks."
+      ],
+      translations: [
+        "鉛筆で間違えたとき使います。",
+        "筆箱の中にある小さくて白いものです。",
+        "鉛筆の跡を消せます。"
+      ],
+      keywords: [
+        { word: "mistake", meaning: "間違い", note: "正しくないこと。make a mistake（間違える）" },
+        { word: "pencil", meaning: "鉛筆", note: "字を書く道具" },
+        { word: "erase", meaning: "消す", note: "書いたものを消すこと" }
+      ],
+      choices: ["鉛筆", "定規", "消しゴム", "ノート"]
+    },
+
+    // ===========================
+    // 中学3年レベル (jh3)
+    // - 関係代名詞、受動態、不定詞など
+    // - より長い文章
+    // ===========================
+    {
+      level: "jh3",
       answer: "りんご",
       questions: [
         "What round fruit can be red, green, or yellow?",
@@ -25,6 +450,7 @@ const QuestionMaster = (() => {
       choices: ["りんご", "みかん", "バナナ", "もも"]
     },
     {
+      level: "jh3",
       answer: "猫",
       questions: [
         "What pet says 'meow' and catches mice?",
@@ -44,6 +470,7 @@ const QuestionMaster = (() => {
       choices: ["犬", "猫", "うさぎ", "ハムスター"]
     },
     {
+      level: "jh3",
       answer: "富士山",
       questions: [
         "What is the tallest mountain in Japan?",
@@ -63,6 +490,7 @@ const QuestionMaster = (() => {
       choices: ["エベレスト", "富士山", "阿蘇山", "高尾山"]
     },
     {
+      level: "jh3",
       answer: "寿司",
       questions: [
         "What Japanese food is made with rice and raw fish?",
@@ -82,6 +510,7 @@ const QuestionMaster = (() => {
       choices: ["ラーメン", "天ぷら", "寿司", "うどん"]
     },
     {
+      level: "jh3",
       answer: "傘",
       questions: [
         "What do you use to stay dry when it rains?",
@@ -101,6 +530,7 @@ const QuestionMaster = (() => {
       choices: ["帽子", "傘", "レインコート", "長靴"]
     },
     {
+      level: "jh3",
       answer: "ピアノ",
       questions: [
         "What instrument has black and white keys?",
@@ -120,6 +550,7 @@ const QuestionMaster = (() => {
       choices: ["ギター", "バイオリン", "ピアノ", "ドラム"]
     },
     {
+      level: "jh3",
       answer: "月",
       questions: [
         "What bright thing can you see in the night sky?",
@@ -139,6 +570,7 @@ const QuestionMaster = (() => {
       choices: ["太陽", "月", "星", "地球"]
     },
     {
+      level: "jh3",
       answer: "自転車",
       questions: [
         "What do you ride by pushing pedals with your feet?",
@@ -158,6 +590,7 @@ const QuestionMaster = (() => {
       choices: ["自動車", "バイク", "自転車", "スケートボード"]
     },
     {
+      level: "jh3",
       answer: "桜",
       questions: [
         "What pink flowers bloom in spring in Japan?",
@@ -177,6 +610,7 @@ const QuestionMaster = (() => {
       choices: ["バラ", "桜", "ひまわり", "チューリップ"]
     },
     {
+      level: "jh3",
       answer: "電車",
       questions: [
         "What do people ride to go to work or school on tracks?",
@@ -196,6 +630,7 @@ const QuestionMaster = (() => {
       choices: ["バス", "タクシー", "電車", "飛行機"]
     },
     {
+      level: "jh3",
       answer: "虹",
       questions: [
         "What colorful thing appears in the sky after rain?",
@@ -215,6 +650,7 @@ const QuestionMaster = (() => {
       choices: ["雷", "虹", "雲", "オーロラ"]
     },
     {
+      level: "jh3",
       answer: "カメラ",
       questions: [
         "What do you use to take pictures?",
@@ -234,6 +670,7 @@ const QuestionMaster = (() => {
       choices: ["テレビ", "カメラ", "望遠鏡", "ビデオ"]
     },
     {
+      level: "jh3",
       answer: "地図",
       questions: [
         "What shows you where places are?",
@@ -253,6 +690,7 @@ const QuestionMaster = (() => {
       choices: ["地図", "カレンダー", "時刻表", "辞書"]
     },
     {
+      level: "jh3",
       answer: "チョコレート",
       questions: [
         "What sweet brown candy do kids love?",
@@ -272,6 +710,7 @@ const QuestionMaster = (() => {
       choices: ["クッキー", "ケーキ", "アイスクリーム", "チョコレート"]
     },
     {
+      level: "jh3",
       answer: "時計",
       questions: [
         "What tells you the time with numbers 1 to 12?",
@@ -291,6 +730,7 @@ const QuestionMaster = (() => {
       choices: ["時計", "カレンダー", "砂時計", "温度計"]
     },
     {
+      level: "jh3",
       answer: "サッカー",
       questions: [
         "What sport do you play by kicking a ball into a goal?",
@@ -310,6 +750,7 @@ const QuestionMaster = (() => {
       choices: ["野球", "サッカー", "バスケットボール", "テニス"]
     },
     {
+      level: "jh3",
       answer: "冷蔵庫",
       questions: [
         "What big machine in the kitchen keeps food cold?",
@@ -329,6 +770,7 @@ const QuestionMaster = (() => {
       choices: ["電子レンジ", "冷蔵庫", "洗濯機", "エアコン"]
     },
     {
+      level: "jh3",
       answer: "ペンギン",
       questions: [
         "What black and white bird cannot fly but loves to swim?",
@@ -348,6 +790,7 @@ const QuestionMaster = (() => {
       choices: ["ペンギン", "フラミンゴ", "アヒル", "ワシ"]
     },
     {
+      level: "jh3",
       answer: "太陽",
       questions: [
         "What is the bright thing in the sky during the day?",
@@ -367,6 +810,7 @@ const QuestionMaster = (() => {
       choices: ["月", "太陽", "火星", "北極星"]
     },
     {
+      level: "jh3",
       answer: "消しゴム",
       questions: [
         "What do you use when you write something wrong with a pencil?",
@@ -386,6 +830,7 @@ const QuestionMaster = (() => {
       choices: ["鉛筆", "定規", "消しゴム", "ノート"]
     },
     {
+      level: "jh3",
       answer: "新幹線",
       questions: [
         "What is the fastest train in Japan?",
@@ -405,6 +850,7 @@ const QuestionMaster = (() => {
       choices: ["地下鉄", "モノレール", "新幹線", "路面電車"]
     },
     {
+      level: "jh3",
       answer: "図書館",
       questions: [
         "Where can you borrow books for free?",
@@ -424,6 +870,7 @@ const QuestionMaster = (() => {
       choices: ["本屋", "学校", "図書館", "博物館"]
     },
     {
+      level: "jh3",
       answer: "餃子",
       questions: [
         "What small food has meat inside thin dough?",
@@ -443,6 +890,7 @@ const QuestionMaster = (() => {
       choices: ["シュウマイ", "餃子", "春巻き", "肉まん"]
     },
     {
+      level: "jh3",
       answer: "眼鏡",
       questions: [
         "What do you wear on your face to see better?",
@@ -462,6 +910,7 @@ const QuestionMaster = (() => {
       choices: ["サングラス", "望遠鏡", "眼鏡", "コンタクトレンズ"]
     },
     {
+      level: "jh3",
       answer: "お正月",
       questions: [
         "What is the most important holiday in Japan on January 1st?",
@@ -481,6 +930,7 @@ const QuestionMaster = (() => {
       choices: ["クリスマス", "お正月", "ひな祭り", "七夕"]
     },
     {
+      level: "jh3",
       answer: "イルカ",
       questions: [
         "What smart sea animal jumps out of the water?",
@@ -500,6 +950,7 @@ const QuestionMaster = (() => {
       choices: ["クジラ", "サメ", "イルカ", "アザラシ"]
     },
     {
+      level: "jh3",
       answer: "エレベーター",
       questions: [
         "What goes up and down inside a building?",
@@ -519,6 +970,7 @@ const QuestionMaster = (() => {
       choices: ["エスカレーター", "エレベーター", "階段", "はしご"]
     },
     {
+      level: "jh3",
       answer: "蜂蜜",
       questions: [
         "What sweet yellow liquid do bees make from flowers?",
@@ -538,6 +990,7 @@ const QuestionMaster = (() => {
       choices: ["砂糖", "メープルシロップ", "ジャム", "蜂蜜"]
     },
     {
+      level: "jh3",
       answer: "恐竜",
       questions: [
         "What very big animals lived millions of years ago?",
@@ -557,6 +1010,7 @@ const QuestionMaster = (() => {
       choices: ["恐竜", "ドラゴン", "ワニ", "ゴジラ"]
     },
     {
+      level: "jh3",
       answer: "風呂",
       questions: [
         "Where do Japanese people wash and sit in hot water every evening?",
@@ -579,13 +1033,25 @@ const QuestionMaster = (() => {
 
   let currentQuestions = [];
   let currentIndex = 0;
+  let currentLevel = null;
 
   const QUESTIONS_PER_GAME = 7;
 
-  function prepareGame(questionList) {
+  function getLevels() {
+    return LEVELS;
+  }
+
+  function prepareGame(questionList, level) {
+    currentLevel = level || null;
+
     if (questionList) {
       // 復習モード: 指定された問題リストを使用
       currentQuestions = [...questionList].sort(() => Math.random() - 0.5);
+    } else if (level) {
+      // レベル指定: そのレベルの問題からランダムに選択
+      const levelQuestions = allQuestions.filter(q => q.level === level);
+      const shuffled = [...levelQuestions].sort(() => Math.random() - 0.5);
+      currentQuestions = shuffled.slice(0, QUESTIONS_PER_GAME);
     } else {
       const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
       currentQuestions = shuffled.slice(0, QUESTIONS_PER_GAME);
@@ -613,15 +1079,25 @@ const QuestionMaster = (() => {
     };
   }
 
-  function getQuestionsByAnswers(answers) {
-    return allQuestions.filter(q => answers.includes(q.answer));
+  function getCurrentLevel() {
+    return currentLevel;
+  }
+
+  function getQuestionsByAnswers(answers, level) {
+    let pool = allQuestions;
+    if (level) {
+      pool = pool.filter(q => q.level === level);
+    }
+    return pool.filter(q => answers.includes(q.answer));
   }
 
   return {
+    getLevels,
     prepareGame,
     getCurrentQuestion,
     nextQuestion,
     getProgress,
+    getCurrentLevel,
     getQuestionsByAnswers
   };
 })();

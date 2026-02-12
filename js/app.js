@@ -4,23 +4,43 @@
  * - イベントリスナーを管理する
  */
 window.app = (() => {
-  function init() {
-    document.getElementById("btn-start").addEventListener("click", () => startGame(false));
-    document.getElementById("btn-review").addEventListener("click", () => startGame(true));
-    document.getElementById("btn-next").addEventListener("click", nextQuestion);
-    document.getElementById("btn-retry").addEventListener("click", goToStart);
-    document.getElementById("btn-review-final").addEventListener("click", () => startGame(true));
+  let selectedLevel = null;
 
-    // 初回表示時に復習ボタンの状態を更新
+  function init() {
+    document.getElementById("btn-next").addEventListener("click", nextQuestion);
+    document.getElementById("btn-retry").addEventListener("click", () => {
+      // 同じレベルで再挑戦
+      if (selectedLevel) {
+        startGameWithLevel(selectedLevel);
+      } else {
+        goToStart();
+      }
+    });
+    document.getElementById("btn-review-final").addEventListener("click", () => {
+      if (selectedLevel) {
+        startReviewWithLevel(selectedLevel);
+      }
+    });
+    document.getElementById("btn-back-home").addEventListener("click", goToStart);
+
+    // 初回表示
     Renderer.renderStartScreen();
   }
 
   function goToStart() {
+    selectedLevel = null;
     Renderer.renderStartScreen();
   }
 
-  function startGame(reviewMode) {
-    GameMaster.startGame(reviewMode);
+  function startGameWithLevel(level) {
+    selectedLevel = level;
+    GameMaster.startGame(false, level);
+    Renderer.renderQuiz();
+  }
+
+  function startReviewWithLevel(level) {
+    selectedLevel = level;
+    GameMaster.startGame(true, level);
     Renderer.renderQuiz();
   }
 
@@ -42,5 +62,5 @@ window.app = (() => {
 
   init();
 
-  return { handleAnswer };
+  return { handleAnswer, startGameWithLevel, startReviewWithLevel };
 })();

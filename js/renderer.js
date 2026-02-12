@@ -17,14 +17,41 @@ const Renderer = (() => {
   }
 
   function renderStartScreen() {
-    const reviewBtn = document.getElementById("btn-review");
-    if (GameMaster.hasReviewStock()) {
-      const count = GameMaster.getReviewStockCount();
-      reviewBtn.textContent = `復習する（${count}問）`;
-      reviewBtn.style.display = "block";
-    } else {
-      reviewBtn.style.display = "none";
-    }
+    const levels = QuestionMaster.getLevels();
+    const container = document.getElementById("level-buttons");
+    container.innerHTML = "";
+
+    Object.values(levels).forEach(level => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "level-btn-wrapper";
+
+      const btn = document.createElement("button");
+      btn.className = "btn btn-level";
+      btn.dataset.level = level.id;
+      btn.innerHTML = `
+        <span class="level-label">${level.label}</span>
+        <span class="level-desc">${level.description}</span>
+      `;
+      btn.addEventListener("click", () => {
+        window.app.startGameWithLevel(level.id);
+      });
+      wrapper.appendChild(btn);
+
+      // 復習ボタン（該当レベルに復習問題がある場合のみ表示）
+      if (GameMaster.hasReviewStock(level.id)) {
+        const count = GameMaster.getReviewStockCount(level.id);
+        const reviewBtn = document.createElement("button");
+        reviewBtn.className = "btn btn-review-level";
+        reviewBtn.textContent = `復習する（${count}問）`;
+        reviewBtn.addEventListener("click", () => {
+          window.app.startReviewWithLevel(level.id);
+        });
+        wrapper.appendChild(reviewBtn);
+      }
+
+      container.appendChild(wrapper);
+    });
+
     showScreen("start");
   }
 
@@ -33,6 +60,8 @@ const Renderer = (() => {
     const question = QuestionMaster.getCurrentQuestion();
     const score = GameMaster.getScore();
     const isReview = GameMaster.getIsReviewMode();
+    const level = GameMaster.getCurrentLevel();
+    const levels = QuestionMaster.getLevels();
 
     document.getElementById("quiz-progress").textContent =
       `Q${progress.current} / ${progress.total}`;
@@ -46,6 +75,15 @@ const Renderer = (() => {
       modeLabel.style.display = "inline-block";
     } else {
       modeLabel.style.display = "none";
+    }
+
+    // レベル表示
+    const levelLabel = document.getElementById("quiz-level");
+    if (level && levels[level]) {
+      levelLabel.textContent = levels[level].label;
+      levelLabel.style.display = "inline-block";
+    } else {
+      levelLabel.style.display = "none";
     }
 
     // 3つの英語質問文を表示
@@ -143,9 +181,15 @@ const Renderer = (() => {
     const rank = GameMaster.getRank();
     const results = GameMaster.getResults();
     const isReview = GameMaster.getIsReviewMode();
+    const level = GameMaster.getCurrentLevel();
+    const levels = QuestionMaster.getLevels();
 
     const titleEl = document.getElementById("final-title-text");
-    titleEl.textContent = isReview ? "復習結果" : "結果発表";
+    let titleText = isReview ? "復習結果" : "結果発表";
+    if (level && levels[level]) {
+      titleText += ` - ${levels[level].label}`;
+    }
+    titleEl.textContent = titleText;
 
     document.getElementById("final-score").innerHTML = `
       <div class="rank" style="color: ${rank.color}">${rank.rank}</div>
@@ -169,8 +213,8 @@ const Renderer = (() => {
 
     // 復習ボタン表示
     const reviewBtn = document.getElementById("btn-review-final");
-    if (GameMaster.hasReviewStock()) {
-      const count = GameMaster.getReviewStockCount();
+    if (GameMaster.hasReviewStock(level)) {
+      const count = GameMaster.getReviewStockCount(level);
       reviewBtn.textContent = `間違えた問題を復習する（${count}問）`;
       reviewBtn.style.display = "block";
     } else {

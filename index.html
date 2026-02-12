@@ -16,13 +16,17 @@
         <p>ルール</p>
         <ul>
           <li>英語の質問文を3つ読んで、それが何かを当てます</li>
-          <li>質問文はすべて中学英語レベルです</li>
+          <li>レベルを選んでチャレンジ！</li>
           <li>回答後、和訳とポイント英単語を確認できます</li>
           <li>間違えた問題は復習モードで再挑戦！</li>
         </ul>
       </div>
-      <button id="btn-start" class="btn btn-primary">スタート</button>
-      <button id="btn-review" class="btn btn-review" style="display:none">復習する</button>
+
+      <!-- レベル選択 -->
+      <div class="level-select">
+        <p class="level-select-title">レベルを選ぼう</p>
+        <div class="level-buttons" id="level-buttons"></div>
+      </div>
     </div>
 
     <!-- Quiz Screen -->
@@ -30,6 +34,7 @@
       <div class="quiz-header">
         <span id="quiz-progress">Q1 / 7</span>
         <span id="quiz-mode" class="quiz-mode" style="display:none">復習モード</span>
+        <span id="quiz-level" class="quiz-level" style="display:none"></span>
         <span id="quiz-score">Score: 0</span>
       </div>
       <div class="question-prompt">この3つの質問に答えられるものは？</div>
@@ -51,6 +56,7 @@
       <div id="final-breakdown" class="final-breakdown"></div>
       <button id="btn-review-final" class="btn btn-review" style="display:none">間違えた問題を復習する</button>
       <button id="btn-retry" class="btn btn-primary">もう一度遊ぶ</button>
+      <button id="btn-back-home" class="btn btn-secondary">レベル選択に戻る</button>
     </div>
   </div>
 

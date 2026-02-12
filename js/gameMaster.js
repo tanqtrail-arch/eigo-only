@@ -3,27 +3,33 @@
  * - ゲーム進行を管理する
  * - スコア計算（正解 = 100点）
  * - 正誤判定
- * - 間違えた問題のストック（localStorage）
+ * - 間違えた問題のストック（localStorage、レベル別）
  */
 const GameMaster = (() => {
   const POINTS_PER_CORRECT = 100;
-  const STORAGE_KEY = "eigo-only-review";
+  const STORAGE_KEY_PREFIX = "eigo-only-review";
 
   let score = 0;
   let results = [];
   let isReviewMode = false;
+  let currentLevel = null;
 
-  function startGame(reviewMode) {
+  function getStorageKey(level) {
+    return level ? `${STORAGE_KEY_PREFIX}-${level}` : STORAGE_KEY_PREFIX;
+  }
+
+  function startGame(reviewMode, level) {
     score = 0;
     results = [];
     isReviewMode = !!reviewMode;
+    currentLevel = level || null;
 
     if (reviewMode) {
-      const reviewAnswers = getReviewStock();
-      const reviewQuestions = QuestionMaster.getQuestionsByAnswers(reviewAnswers);
-      QuestionMaster.prepareGame(reviewQuestions);
+      const reviewAnswers = getReviewStock(level);
+      const reviewQuestions = QuestionMaster.getQuestionsByAnswers(reviewAnswers, level);
+      QuestionMaster.prepareGame(reviewQuestions, level);
     } else {
-      QuestionMaster.prepareGame();
+      QuestionMaster.prepareGame(null, level);
     }
   }
 
@@ -43,12 +49,13 @@ const GameMaster = (() => {
       points
     });
 
+    const level = question.level;
     // 間違えた問題をストックに追加
     if (!correct) {
-      addToReviewStock(question.answer);
+      addToReviewStock(question.answer, level);
     } else {
       // 正解したら復習ストックから削除
-      removeFromReviewStock(question.answer);
+      removeFromReviewStock(question.answer, level);
     }
 
     return {
@@ -73,6 +80,10 @@ const GameMaster = (() => {
     return isReviewMode;
   }
 
+  function getCurrentLevel() {
+    return currentLevel;
+  }
+
   function getMaxPossibleScore() {
     return QuestionMaster.getProgress().total * POINTS_PER_CORRECT;
   }
@@ -87,36 +98,39 @@ const GameMaster = (() => {
     return { rank: "D", label: "がんばろう！", color: "#96ceb4" };
   }
 
-  // --- 復習ストック管理 ---
-  function getReviewStock() {
+  // --- 復習ストック管理（レベル別） ---
+  function getReviewStock(level) {
     try {
-      const data = localStorage.getItem(STORAGE_KEY);
+      const key = getStorageKey(level);
+      const data = localStorage.getItem(key);
       return data ? JSON.parse(data) : [];
     } catch {
       return [];
     }
   }
 
-  function addToReviewStock(answer) {
-    const stock = getReviewStock();
+  function addToReviewStock(answer, level) {
+    const key = getStorageKey(level);
+    const stock = getReviewStock(level);
     if (!stock.includes(answer)) {
       stock.push(answer);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(stock));
+      localStorage.setItem(key, JSON.stringify(stock));
     }
   }
 
-  function removeFromReviewStock(answer) {
-    const stock = getReviewStock();
+  function removeFromReviewStock(answer, level) {
+    const key = getStorageKey(level);
+    const stock = getReviewStock(level);
     const updated = stock.filter(a => a !== answer);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    localStorage.setItem(key, JSON.stringify(updated));
   }
 
-  function hasReviewStock() {
-    return getReviewStock().length > 0;
+  function hasReviewStock(level) {
+    return getReviewStock(level).length > 0;
   }
 
-  function getReviewStockCount() {
-    return getReviewStock().length;
+  function getReviewStockCount(level) {
+    return getReviewStock(level).length;
   }
 
   return {
@@ -125,6 +139,7 @@ const GameMaster = (() => {
     getScore,
     getResults,
     getIsReviewMode,
+    getCurrentLevel,
     getMaxPossibleScore,
     getRank,
     hasReviewStock,

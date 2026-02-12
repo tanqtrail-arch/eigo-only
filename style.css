@@ -84,10 +84,97 @@ body {
 }
 
 .rules li::before {
-  content: "▸";
+  content: "\25B8";
   position: absolute;
   left: 0;
   color: #4facfe;
+}
+
+/* Level Select */
+.level-select {
+  margin-bottom: 16px;
+}
+
+.level-select-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  color: #4facfe;
+  margin-bottom: 16px;
+}
+
+.level-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.level-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btn-level {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  padding: 20px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.btn-level:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(245, 87, 108, 0.5);
+  box-shadow: 0 4px 16px rgba(245, 87, 108, 0.15);
+}
+
+.btn-level:active {
+  transform: scale(0.97);
+}
+
+.level-label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.level-desc {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.btn-review-level {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(79, 172, 254, 0.3);
+  border-radius: 10px;
+  background: rgba(79, 172, 254, 0.1);
+  color: #4facfe;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-review-level:hover {
+  background: rgba(79, 172, 254, 0.2);
+}
+
+.btn-review-level:active {
+  transform: scale(0.97);
 }
 
 /* Buttons */
@@ -130,6 +217,19 @@ body {
   background: rgba(79, 172, 254, 0.25);
 }
 
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #aaa;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  margin-top: 12px;
+  font-size: 1rem;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
 /* Quiz Screen */
 .quiz-header {
   display: flex;
@@ -138,11 +238,22 @@ body {
   margin-bottom: 16px;
   font-size: 1rem;
   color: #aaa;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .quiz-mode {
   background: rgba(79, 172, 254, 0.2);
   color: #4facfe;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+.quiz-level {
+  background: rgba(240, 147, 251, 0.2);
+  color: #f093fb;
   font-size: 0.8rem;
   font-weight: bold;
   padding: 4px 12px;
