@@ -216,6 +216,106 @@ const QuestionMaster = (() => {
       ],
       choices: ["公園", "学校", "図書館", "病院"]
     },
+    {
+      level: "es4",
+      answer: "月",
+      questions: [
+        "You see it at night.",
+        "It changes its shape.",
+        "It shines in the dark sky."
+      ],
+      translations: [
+        "夜に見える。",
+        "形が変わる。",
+        "暗い空で光る。"
+      ],
+      keywords: [
+        { word: "night", meaning: "夜", note: "暗い時間のこと" },
+        { word: "shape", meaning: "形", note: "丸、三角などの形のこと" },
+        { word: "shine", meaning: "光る", note: "明るく光ること" }
+      ],
+      choices: ["太陽", "月", "星", "雲"]
+    },
+    {
+      level: "es4",
+      answer: "魚",
+      questions: [
+        "It lives in water.",
+        "Cats like to eat it.",
+        "It can swim but cannot walk."
+      ],
+      translations: [
+        "水の中に住んでいる。",
+        "猫が食べるのが好き。",
+        "泳げるけど歩けない。"
+      ],
+      keywords: [
+        { word: "water", meaning: "水", note: "飲んだり泳いだりする液体" },
+        { word: "like", meaning: "好き", note: "〜が好きという意味" },
+        { word: "swim", meaning: "泳ぐ", note: "水の中で動くこと" }
+      ],
+      choices: ["鳥", "魚", "カエル", "カメ"]
+    },
+    {
+      level: "es4",
+      answer: "本",
+      questions: [
+        "It has many pages.",
+        "You read it.",
+        "There are many in a library."
+      ],
+      translations: [
+        "ページがたくさんある。",
+        "読むもの。",
+        "図書館にたくさんある。"
+      ],
+      keywords: [
+        { word: "page", meaning: "ページ", note: "本の1枚1枚のこと" },
+        { word: "read", meaning: "読む", note: "文字を見て理解すること" },
+        { word: "library", meaning: "図書館", note: "本を借りられる場所" }
+      ],
+      choices: ["ノート", "新聞", "本", "雑誌"]
+    },
+    {
+      level: "es4",
+      answer: "虹",
+      questions: [
+        "It appears after rain.",
+        "It has many colors.",
+        "It looks like a big arch in the sky."
+      ],
+      translations: [
+        "雨のあとに出る。",
+        "たくさんの色がある。",
+        "空に大きなアーチのように見える。"
+      ],
+      keywords: [
+        { word: "appear", meaning: "現れる", note: "見えるようになること" },
+        { word: "color", meaning: "色", note: "赤、青、黄色などのこと" },
+        { word: "arch", meaning: "アーチ", note: "弓のような形のこと" }
+      ],
+      choices: ["雲", "虹", "雷", "オーロラ"]
+    },
+    {
+      level: "es4",
+      answer: "雪",
+      questions: [
+        "It is white and soft.",
+        "It falls from the sky.",
+        "You can make a snowman with it."
+      ],
+      translations: [
+        "白くて柔らかい。",
+        "空から降ってくる。",
+        "これで雪だるまを作れる。"
+      ],
+      keywords: [
+        { word: "white", meaning: "白い", note: "色を表す言葉" },
+        { word: "fall", meaning: "降る・落ちる", note: "上から下に落ちること" },
+        { word: "snowman", meaning: "雪だるま", note: "snow（雪）+ man（人）" }
+      ],
+      choices: ["雨", "雪", "氷", "霜"]
+    },
 
     // ===========================
     // 中学1年レベル (jh1)
@@ -419,6 +519,106 @@ const QuestionMaster = (() => {
         { word: "mistake", meaning: "間違い", note: "正しくないこと。make a mistake（間違える）" }
       ],
       choices: ["鉛筆", "定規", "消しゴム", "ノート"]
+    },
+    {
+      level: "jh1",
+      answer: "図書館",
+      questions: [
+        "It is a quiet building with many shelves.",
+        "Students go there to study and do homework.",
+        "You can borrow books for free at this place."
+      ],
+      translations: [
+        "たくさんの棚がある静かな建物です。",
+        "生徒が勉強や宿題をしに行きます。",
+        "無料で本を借りられる場所です。"
+      ],
+      keywords: [
+        { word: "quiet", meaning: "静かな", note: "音がしない状態" },
+        { word: "homework", meaning: "宿題", note: "home（家）+ work（仕事）" },
+        { word: "borrow", meaning: "借りる", note: "返す前提で借りること" }
+      ],
+      choices: ["学校", "図書館", "本屋", "博物館"]
+    },
+    {
+      level: "jh1",
+      answer: "カメラ",
+      questions: [
+        "Everyone has this in their smartphone now.",
+        "You press a button to use it.",
+        "You use this to take pictures."
+      ],
+      translations: [
+        "今はみんなのスマホにこれがあります。",
+        "ボタンを押して使います。",
+        "写真を撮るために使います。"
+      ],
+      keywords: [
+        { word: "smartphone", meaning: "スマートフォン", note: "みんなが持っている電話" },
+        { word: "button", meaning: "ボタン", note: "押すもの" },
+        { word: "picture", meaning: "写真・絵", note: "take a picture で「写真を撮る」" }
+      ],
+      choices: ["テレビ", "カメラ", "ラジオ", "ビデオ"]
+    },
+    {
+      level: "jh1",
+      answer: "地図",
+      questions: [
+        "Travelers always carry this with them.",
+        "It shows streets and buildings.",
+        "You look at this to find a place."
+      ],
+      translations: [
+        "旅行者はいつもこれを持っています。",
+        "道路や建物が載っています。",
+        "場所を見つけるためにこれを見ます。"
+      ],
+      keywords: [
+        { word: "traveler", meaning: "旅行者", note: "旅をする人" },
+        { word: "street", meaning: "通り・道", note: "車や人が通る道" },
+        { word: "find", meaning: "見つける", note: "探しているものを見つけること" }
+      ],
+      choices: ["教科書", "辞書", "地図", "ガイドブック"]
+    },
+    {
+      level: "jh1",
+      answer: "新幹線",
+      questions: [
+        "This goes very fast between big cities.",
+        "It looks like a long white and blue snake.",
+        "This is the fastest train in Japan."
+      ],
+      translations: [
+        "大きな都市の間をとても速く走ります。",
+        "長い白と青のヘビのように見えます。",
+        "日本で一番速い電車です。"
+      ],
+      keywords: [
+        { word: "fast", meaning: "速い", note: "スピードが速いこと" },
+        { word: "between", meaning: "〜の間", note: "2つのものの間" },
+        { word: "fastest", meaning: "一番速い", note: "fast の最上級" }
+      ],
+      choices: ["バス", "地下鉄", "新幹線", "飛行機"]
+    },
+    {
+      level: "jh1",
+      answer: "お弁当",
+      questions: [
+        "Your mother or father makes this for you in the morning.",
+        "You open a box and eat it at lunchtime.",
+        "This is a Japanese lunch box with rice and side dishes."
+      ],
+      translations: [
+        "朝、お父さんやお母さんが作ってくれます。",
+        "昼に箱を開けて食べます。",
+        "ごはんとおかずが入った日本のランチボックスです。"
+      ],
+      keywords: [
+        { word: "morning", meaning: "朝", note: "一日の始まりの時間" },
+        { word: "lunchtime", meaning: "昼食の時間", note: "お昼ごはんの時間" },
+        { word: "side dish", meaning: "おかず", note: "ごはんと一緒に食べるもの" }
+      ],
+      choices: ["おにぎり", "お弁当", "サンドイッチ", "カップラーメン"]
     },
 
     // ===========================
@@ -723,306 +923,6 @@ const QuestionMaster = (() => {
         { word: "tell the time", meaning: "時間を教える", note: "tell は「教える・伝える」" }
       ],
       choices: ["時計", "カレンダー", "砂時計", "温度計"]
-    },
-    {
-      level: "jh3",
-      answer: "サッカー",
-      questions: [
-        "What sport has the World Cup as its biggest event?",
-        "In what sport can you NOT use your hands?",
-        "What sport do you play by kicking a ball into a goal?"
-      ],
-      translations: [
-        "ワールドカップが最大のイベントであるスポーツは何？",
-        "手を使ってはいけないスポーツは何？",
-        "ボールをゴールに蹴り入れるスポーツは何？"
-      ],
-      keywords: [
-        { word: "World Cup", meaning: "ワールドカップ", note: "世界最大のサッカー大会" },
-        { word: "hand", meaning: "手", note: "体の一部。左右にある" },
-        { word: "kick", meaning: "蹴る", note: "足でボールを蹴る動作" }
-      ],
-      choices: ["野球", "サッカー", "バスケットボール", "テニス"]
-    },
-    {
-      level: "jh3",
-      answer: "冷蔵庫",
-      questions: [
-        "What runs all day and night to stop food from going bad?",
-        "Where do you put milk, eggs, and vegetables to keep them fresh?",
-        "What big machine in the kitchen keeps food cold?"
-      ],
-      translations: [
-        "食べ物が腐らないように一日中動いているものは何？",
-        "牛乳、卵、野菜を新鮮に保つためにどこに入れる？",
-        "台所にある食べ物を冷たく保つ大きな機械は何？"
-      ],
-      keywords: [
-        { word: "go bad", meaning: "腐る", note: "食べ物が悪くなること" },
-        { word: "fresh", meaning: "新鮮な", note: "食べ物が良い状態であること" },
-        { word: "kitchen", meaning: "台所", note: "料理をする場所" }
-      ],
-      choices: ["電子レンジ", "冷蔵庫", "洗濯機", "エアコン"]
-    },
-    {
-      level: "jh3",
-      answer: "ペンギン",
-      questions: [
-        "What bird can you see at aquariums swimming very fast?",
-        "What cute bird lives near ice and walks in a funny way?",
-        "What black and white bird cannot fly but loves to swim?"
-      ],
-      translations: [
-        "水族館でとても速く泳いでいるのを見られる鳥は何？",
-        "氷の近くに住んでいて面白い歩き方をするかわいい鳥は何？",
-        "飛べないけど泳ぐのが好きな白黒の鳥は何？"
-      ],
-      keywords: [
-        { word: "aquarium", meaning: "水族館", note: "海の生き物を見られる施設" },
-        { word: "funny", meaning: "おかしい・面白い", note: "笑いを誘うようなおかしさ" },
-        { word: "fly", meaning: "飛ぶ", note: "fly - flew - flown と変化する不規則動詞" }
-      ],
-      choices: ["ペンギン", "フラミンゴ", "アヒル", "ワシ"]
-    },
-    {
-      level: "jh3",
-      answer: "太陽",
-      questions: [
-        "What gives us light and heat every day?",
-        "What rises in the east and sets in the west?",
-        "What is the bright thing in the sky during the day?"
-      ],
-      translations: [
-        "毎日私たちに光と熱を与えてくれるものは何？",
-        "東から昇って西に沈むものは何？",
-        "昼間、空にある明るいものは何？"
-      ],
-      keywords: [
-        { word: "heat", meaning: "熱", note: "温かさ・暑さを表す名詞" },
-        { word: "rise", meaning: "昇る", note: "rise - rose - risen。太陽が昇ること" },
-        { word: "bright", meaning: "明るい", note: "光を発するものに使う形容詞" }
-      ],
-      choices: ["月", "太陽", "火星", "北極星"]
-    },
-    {
-      level: "jh3",
-      answer: "消しゴム",
-      questions: [
-        "What do you always find in a pencil case at school?",
-        "What small white thing can rub out pencil marks?",
-        "What do you use when you write something wrong with a pencil?"
-      ],
-      translations: [
-        "学校の筆箱の中に必ずあるものは何？",
-        "鉛筆の跡を消せる小さくて白いものは何？",
-        "鉛筆で間違えて書いたとき何を使う？"
-      ],
-      keywords: [
-        { word: "pencil case", meaning: "筆箱", note: "文房具を入れるケース" },
-        { word: "rub out", meaning: "こすって消す", note: "rub は「こする」という動詞" },
-        { word: "wrong", meaning: "間違った", note: "正しくない状態。反対は right" }
-      ],
-      choices: ["鉛筆", "定規", "消しゴム", "ノート"]
-    },
-    {
-      level: "jh3",
-      answer: "新幹線",
-      questions: [
-        "How can you go from Tokyo to Osaka in about 2 hours?",
-        "What train looks like a bullet and is white and blue?",
-        "What is the fastest train in Japan?"
-      ],
-      translations: [
-        "東京から大阪まで約2時間で行ける方法は何？",
-        "弾丸のような形で白と青色の電車は何？",
-        "日本で一番速い電車は何？"
-      ],
-      keywords: [
-        { word: "about", meaning: "約・だいたい", note: "おおよその数を表すときに使う" },
-        { word: "bullet", meaning: "弾丸", note: "bullet train で「新幹線」" },
-        { word: "fastest", meaning: "一番速い", note: "fast の最上級。fast - faster - fastest" }
-      ],
-      choices: ["地下鉄", "モノレール", "新幹線", "路面電車"]
-    },
-    {
-      level: "jh3",
-      answer: "図書館",
-      questions: [
-        "What building has many books and you must be quiet in?",
-        "Where do you go to read and study after school?",
-        "Where can you borrow books for free?"
-      ],
-      translations: [
-        "たくさんの本があって静かにしなければならない建物は何？",
-        "放課後に読書や勉強をしに行く場所はどこ？",
-        "無料で本を借りられる場所はどこ？"
-      ],
-      keywords: [
-        { word: "quiet", meaning: "静かな", note: "音を立てない状態。Be quiet!（静かに！）" },
-        { word: "after school", meaning: "放課後", note: "学校が終わった後の時間" },
-        { word: "borrow", meaning: "借りる", note: "無料で借りる。有料で借りるは rent" }
-      ],
-      choices: ["本屋", "学校", "図書館", "博物館"]
-    },
-    {
-      level: "jh3",
-      answer: "餃子",
-      questions: [
-        "What popular food came from China and is loved in Japan too?",
-        "What can you fry, boil, or steam and dip in soy sauce?",
-        "What small food has meat inside thin dough?"
-      ],
-      translations: [
-        "中国から来て日本でも愛されている人気の食べ物は何？",
-        "焼いたり茹でたり蒸したりして醤油につけて食べるものは何？",
-        "薄い皮の中に肉が入っている小さな食べ物は何？"
-      ],
-      keywords: [
-        { word: "popular", meaning: "人気の", note: "多くの人に好かれていること" },
-        { word: "fry", meaning: "焼く・揚げる", note: "油を使って調理すること" },
-        { word: "dough", meaning: "生地", note: "パンや餃子の皮の材料。発音は「ドウ」" }
-      ],
-      choices: ["シュウマイ", "餃子", "春巻き", "肉まん"]
-    },
-    {
-      level: "jh3",
-      answer: "眼鏡",
-      questions: [
-        "What helps people who cannot see clearly?",
-        "What has two round glass parts and sits on your nose?",
-        "What do you wear on your face to see better?"
-      ],
-      translations: [
-        "はっきり見えない人を助けるものは何？",
-        "丸いガラスが2つあって鼻の上に乗せるものは何？",
-        "よく見えるように顔につけるものは何？"
-      ],
-      keywords: [
-        { word: "clearly", meaning: "はっきりと", note: "clear の副詞形。I can see clearly.（はっきり見える）" },
-        { word: "glass", meaning: "ガラス・レンズ", note: "透明な素材。glasses で「眼鏡」" },
-        { word: "wear", meaning: "かける・身につける", note: "メガネや服など身につけるもの全般に使う" }
-      ],
-      choices: ["サングラス", "望遠鏡", "眼鏡", "コンタクトレンズ"]
-    },
-    {
-      level: "jh3",
-      answer: "お正月",
-      questions: [
-        "What holiday do people celebrate by eating mochi and visiting shrines?",
-        "When do children get otoshidama (money) from their family?",
-        "What is the most important holiday in Japan on January 1st?"
-      ],
-      translations: [
-        "お餅を食べて神社にお参りして祝う祝日は何？",
-        "子供が家族からお年玉をもらうのはいつ？",
-        "1月1日の日本で最も大切な祝日は何？"
-      ],
-      keywords: [
-        { word: "celebrate", meaning: "祝う", note: "お祝いすること" },
-        { word: "shrine", meaning: "神社", note: "日本の宗教施設。temple は「お寺」" },
-        { word: "holiday", meaning: "祝日", note: "お休みの日。vacation より短い休み" }
-      ],
-      choices: ["クリスマス", "お正月", "ひな祭り", "七夕"]
-    },
-    {
-      level: "jh3",
-      answer: "イルカ",
-      questions: [
-        "What sea animal makes clicking sounds and swims very fast?",
-        "What friendly animal can you see doing tricks at aquariums?",
-        "What smart sea animal jumps out of the water?"
-      ],
-      translations: [
-        "カチカチという音を出してとても速く泳ぐ海の動物は何？",
-        "水族館で芸をしているのを見られるフレンドリーな動物は何？",
-        "水の中から飛び出す賢い海の動物は何？"
-      ],
-      keywords: [
-        { word: "clicking", meaning: "カチカチという", note: "click は「カチッと鳴る」" },
-        { word: "trick", meaning: "芸・技", note: "do tricks で「芸をする」" },
-        { word: "smart", meaning: "賢い", note: "頭が良い。clever とほぼ同じ意味" }
-      ],
-      choices: ["クジラ", "サメ", "イルカ", "アザラシ"]
-    },
-    {
-      level: "jh3",
-      answer: "エレベーター",
-      questions: [
-        "What has buttons for each floor and doors that open by themselves?",
-        "What do you ride when you don't want to use the stairs?",
-        "What goes up and down inside a building?"
-      ],
-      translations: [
-        "各階のボタンがあってドアが自動で開くものは何？",
-        "階段を使いたくないとき乗るものは何？",
-        "建物の中で上下に動くものは何？"
-      ],
-      keywords: [
-        { word: "by themselves", meaning: "自動で・ひとりでに", note: "by oneself で「自分で」" },
-        { word: "stairs", meaning: "階段", note: "常に複数形で使う" },
-        { word: "floor", meaning: "階", note: "建物の階数。1st floor（1階）" }
-      ],
-      choices: ["エスカレーター", "エレベーター", "階段", "はしご"]
-    },
-    {
-      level: "jh3",
-      answer: "蜂蜜",
-      questions: [
-        "What natural food is very sweet and never goes bad?",
-        "What can you put on pancakes or in hot drinks?",
-        "What sweet yellow liquid do bees make from flowers?"
-      ],
-      translations: [
-        "とても甘くて絶対に腐らない天然の食べ物は何？",
-        "パンケーキや温かい飲み物に入れられるものは何？",
-        "ハチが花から作る甘くて黄色い液体は何？"
-      ],
-      keywords: [
-        { word: "natural", meaning: "天然の・自然の", note: "人工ではない、自然のままの" },
-        { word: "pancake", meaning: "パンケーキ", note: "薄く焼いたケーキ" },
-        { word: "bee", meaning: "ハチ", note: "蜂蜜を作る昆虫" }
-      ],
-      choices: ["砂糖", "メープルシロップ", "ジャム", "蜂蜜"]
-    },
-    {
-      level: "jh3",
-      answer: "恐竜",
-      questions: [
-        "What animals' bones can you see in museums?",
-        "What is T-Rex the most famous example of?",
-        "What very big animals lived millions of years ago?"
-      ],
-      translations: [
-        "博物館で骨を見ることができる動物は何？",
-        "ティラノサウルスが最も有名な例であるものは何？",
-        "何百万年も前に生きていたとても大きな動物は何？"
-      ],
-      keywords: [
-        { word: "bone", meaning: "骨", note: "体の中の硬い部分" },
-        { word: "museum", meaning: "博物館", note: "歴史や自然を学べる施設" },
-        { word: "million", meaning: "百万", note: "millions of 〜 で「何百万もの〜」" }
-      ],
-      choices: ["恐竜", "ドラゴン", "ワニ", "ゴジラ"]
-    },
-    {
-      level: "jh3",
-      answer: "風呂",
-      questions: [
-        "Where do you wash your body first, then sit in a tub?",
-        "What do you use to relax in hot water after a long day?",
-        "Where do Japanese people wash and sit in hot water every evening?"
-      ],
-      translations: [
-        "最初に体を洗って、それから湯船に浸かる場所はどこ？",
-        "長い1日の後にお湯でリラックスするために使うものは何？",
-        "日本人が毎晩体を洗ってお湯に浸かる場所はどこ？"
-      ],
-      keywords: [
-        { word: "tub", meaning: "湯船", note: "お湯を溜める入れ物。bathtub とも言う" },
-        { word: "relax", meaning: "リラックスする", note: "くつろぐこと" },
-        { word: "wash", meaning: "洗う", note: "体や物を洗う動作" }
-      ],
-      choices: ["プール", "風呂", "シャワー", "温泉"]
     }
   ];
 
@@ -1031,7 +931,7 @@ const QuestionMaster = (() => {
   let currentLevel = null;
   let hintsRevealed = 1;
 
-  const QUESTIONS_PER_GAME = 7;
+  const QUESTIONS_PER_GAME = 5;
 
   function getLevels() {
     return LEVELS;
