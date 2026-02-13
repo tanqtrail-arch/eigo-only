@@ -1097,6 +1097,10 @@ const QuestionMaster = (() => {
     return pool.filter(q => answers.includes(q.answer));
   }
 
+  function getAllQuestionsForLevel(level) {
+    return allQuestions.filter(q => q.level === level);
+  }
+
   return {
     getLevels,
     prepareGame,
@@ -1106,6 +1110,7 @@ const QuestionMaster = (() => {
     getHintsRevealed,
     getProgress,
     getCurrentLevel,
-    getQuestionsByAnswers
+    getQuestionsByAnswers,
+    getAllQuestionsForLevel
   };
 })();

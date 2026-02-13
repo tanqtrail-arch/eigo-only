@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- 紙吹雪コンテナ -->
+  <div id="confetti-container" class="confetti-container"></div>
+  <!-- コンボポップアップ -->
+  <div id="combo-popup" class="combo-popup"></div>
+
   <div id="app">
     <!-- Start Screen -->
     <div id="screen-start" class="screen active">
@@ -17,7 +22,8 @@
         <ul>
           <li>ヒント1だけで答えると 300pt！</li>
           <li>ヒントを開くほどポイントが下がるよ（200pt → 100pt）</li>
-          <li>回答後、和訳とポイント英単語を確認できます</li>
+          <li>連続正解でコンボ倍率UP！（x1.2 → x1.5 → x2.0）</li>
+          <li>30秒以内に答えよう！残り秒数がボーナスに</li>
           <li>間違えた問題は復習モードで再挑戦！</li>
         </ul>
       </div>
@@ -35,8 +41,10 @@
         <span id="quiz-progress">Q1 / 7</span>
         <span id="quiz-mode" class="quiz-mode" style="display:none">復習モード</span>
         <span id="quiz-level" class="quiz-level" style="display:none"></span>
+        <span id="combo-display" class="combo-display" style="display:none"></span>
         <span id="quiz-score">Score: 0</span>
       </div>
+      <div id="quiz-timer" class="quiz-timer"></div>
       <div class="hint-points-bar">
         <span id="hint-points">いま答えると 300pt</span>
       </div>
@@ -55,7 +63,9 @@
     <div id="screen-final" class="screen">
       <h2 id="final-title-text" class="final-title">結果発表</h2>
       <div id="final-score" class="final-score"></div>
+      <div id="final-titles" class="final-titles" style="display:none"></div>
       <div id="final-breakdown" class="final-breakdown"></div>
+      <div id="final-ranking" class="final-ranking" style="display:none"></div>
       <button id="btn-review-final" class="btn btn-review" style="display:none">間違えた問題を復習する</button>
       <button id="btn-retry" class="btn btn-primary">もう一度遊ぶ</button>
       <button id="btn-back-home" class="btn btn-secondary">レベル選択に戻る</button>
